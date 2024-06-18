@@ -40,12 +40,12 @@ function setup(webContents) {
       // Retrieve saved persistentId : avoid receiving all already received notifications on start
       const persistentIds = config.get('persistentIds') || [];
       // Register if no credentials or if senderId has changed
-      if (!credentials || savedAppID !== fcmConfig.appID) {
+      if (!credentials || savedAppID !== fcmConfig.firebase.appID) {
         credentials = await register(fcmConfig);
         // Save credentials for later use
         config.set('credentials', credentials);
         // Save senderId
-        config.set('appID', fcmConfig.appID);
+        config.set('appID', fcmConfig.firebase.appID);
         // Notify the renderer process that the FCM token has changed
         webContents.send(TOKEN_UPDATED, credentials.fcm.token);
       }
